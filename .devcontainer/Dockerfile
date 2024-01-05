@@ -28,6 +28,12 @@ RUN apt-get update \
     # Clean up
     && apt-get autoremove -y && apt-get clean -y && rm -rf /var/lib/apt/lists/* /tmp/library-scripts/
 
+# Download Bun
+USER vscode
+RUN curl -fsSL https://bun.sh/install | bash \
+    && echo "export PATH=$PATH:$HOME/.bun/bin" >> $HOME/profile
+USER root
+
 VOLUME [ "/var/lib/docker" ]
 
 # Setting the ENTRYPOINT to docker-init.sh will start up the Docker Engine 
