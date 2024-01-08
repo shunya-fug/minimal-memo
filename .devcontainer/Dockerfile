@@ -35,8 +35,7 @@ RUN apt-get update \
 
 # Download Bun
 USER vscode
-RUN curl -fsSL https://bun.sh/install | bash \
-    && echo "export PATH=$PATH:$HOME/.bun/bin" >> $HOME/profile
+RUN curl -fsSL https://bun.sh/install | bash
 USER root
 
 VOLUME [ "/var/lib/docker" ]
