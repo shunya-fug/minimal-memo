@@ -9,3 +9,44 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+generator zod {
+  provider         = "zod-prisma-types"
+  output           = "../src/generated/zod"
+  useMultipleFiles = true
+}
+
+model Tweet {
+  id        String   @id @default(cuid())
+  /// Amazon Cognito User Pool sub
+  sub       String?
+  content   String
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  tagList Tag[]
+
+  @@map("tweet")
+}
+
+model Tag {
+  id        String   @id @default(cuid())
+  /// Amazon Cognito User Pool sub
+  sub       String?
+  /// @zod.string.startsWith("#")
+  value     String   @unique
+  type      TagType
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  tweetList Tweet[]
+
+  @@map("tag")
+}
+
+enum TagType {
+  /// 通常タグ: 例) #language/typescript
+  NORMAL
+  /// フォルダタグ: 例) ##language/typescript
+  FOLDER
+}
