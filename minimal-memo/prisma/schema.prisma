@@ -18,7 +18,7 @@ generator zod {
   createRelationValuesTypes        = true
 }
 
-model Tweet {
+model Memo {
   id        String   @id @default(cuid())
   /// Amazon Cognito User Pool sub
   sub       String
@@ -28,7 +28,7 @@ model Tweet {
 
   tagList Tag[]
 
-  @@map("tweet")
+  @@map("memo")
 }
 
 model Tag {
@@ -41,7 +41,7 @@ model Tag {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
-  tweetList Tweet[]
+  tweetList Memo[]
 
   @@map("tag")
 }

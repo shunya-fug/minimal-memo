@@ -2,7 +2,7 @@ import { Prisma, PrismaClient, TagType } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-const tweetList: Prisma.TweetCreateInput[] = [
+const tweetList: Prisma.MemoCreateInput[] = [
   {
     sub: "sub1",
     content: "test1",
@@ -43,10 +43,10 @@ const tagList: Prisma.TagCreateInput[] = [
 ];
 
 async function main() {
-  await prisma.tweet.deleteMany();
+  await prisma.memo.deleteMany();
   await prisma.tag.deleteMany();
   for (const tweet of tweetList) {
-    await prisma.tweet.create({ data: tweet });
+    await prisma.memo.create({ data: tweet });
   }
   await prisma.tag.createMany({ data: tagList });
 }
