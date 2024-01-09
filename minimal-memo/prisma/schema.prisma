@@ -19,7 +19,7 @@ generator zod {
 model Tweet {
   id        String   @id @default(cuid())
   /// Amazon Cognito User Pool sub
-  sub       String?
+  sub       String
   content   String
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
@@ -32,7 +32,7 @@ model Tweet {
 model Tag {
   id        String   @id @default(cuid())
   /// Amazon Cognito User Pool sub
-  sub       String?
+  sub       String
   /// @zod.string.startsWith("#")
   value     String   @unique
   type      TagType
