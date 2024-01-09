@@ -9,6 +9,9 @@
     "lint": "next lint",
     "migrate-dev": "cd prisma && bun prisma-case-format && bunx prisma migrate dev"
   },
+  "prisma": {
+    "seed": "bun run prisma/seed.ts"
+  },
   "dependencies": {
     "@prisma/client": "^5.7.1",
     "next": "14.0.4",
