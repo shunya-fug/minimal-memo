@@ -15,13 +15,13 @@ generator zod {
   output                           = "../src/generated/zod"
   useMultipleFiles                 = true
   createOptionalDefaultValuesTypes = true
-  createRelationValuesTypes        = true
 }
 
 model Memo {
   id        String   @id @default(cuid())
-  /// Amazon Cognito User Pool sub
+  /// @zod.custom.omit([model])
   sub       String
+  /// @zod.string.min(1, { message: "内容を入力してください" }).max(500, { message: "内容が長すぎます" })
   content   String
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
@@ -33,22 +33,20 @@ model Memo {
 
 model Tag {
   id        String   @id @default(cuid())
-  /// Amazon Cognito User Pool sub
+  /// @zod.custom.omit([model])
   sub       String
-  /// @zod.string.startsWith("#")
+  /// @zod.string.trim().min(1, { message: "タグ名を入力してください" }).max(30, { message: "30文字以内で入力してください" })
   value     String   @unique
   type      TagType
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
-  tweetList Memo[]
+  memoList Memo[]
 
   @@map("tag")
 }
 
 enum TagType {
-  /// 通常タグ: 例) #language/typescript
   NORMAL
-  /// フォルダタグ: 例) ##language/typescript
   FOLDER
 }
