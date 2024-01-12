@@ -5,7 +5,6 @@ export const {
   handlers: { GET, POST },
   auth,
 } = NextAuth({
-  debug: true,
   providers: [
     Cognito({
       clientId: process.env.COGNITO_CLIENT_ID,
@@ -13,4 +12,12 @@ export const {
       issuer: process.env.COGNITO_ISSUER,
     }),
   ],
+  callbacks: {
+    async session({ session, token }) {
+      if (session.user) {
+        session.user.id = token.sub || "";
+      }
+      return session;
+    },
+  },
 });
