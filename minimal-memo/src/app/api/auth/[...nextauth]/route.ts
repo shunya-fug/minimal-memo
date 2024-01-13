@@ -1,2 +1,2 @@
-export { GET, POST } from "@/util/auth";
+export { GET, POST } from "@/common/auth";
 export const runtime = "edge";

@@ -1,4 +1,4 @@
-import { auth } from "@/util/auth";
+import { auth } from "@/common/auth";
 import { NextResponse } from "next/server";
 import { ApiErrorResponse } from "@/types/response";
 import { StatusCode } from "status-code-enum";

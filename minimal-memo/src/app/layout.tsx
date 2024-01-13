@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Noto_Sans_JP, Inconsolata } from "next/font/google";
 import "./globals.css";
 import NextAuthProvider from "@/provider/NextAuthProvider";
-import { auth } from "@/util/auth";
+import { auth } from "@/common/auth";
 import AuthButton from "@/components/AuthButton";
 
 const inter = Inconsolata({ subsets: ["latin"] });

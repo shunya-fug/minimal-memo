@@ -1,5 +1,5 @@
 import { MemoCreateInputSchema } from "@/generated/zod/inputTypeSchemas";
-import { auth } from "@/util/auth";
+import { auth } from "@/common/auth";
 import { PrismaClient } from "@prisma/client";
 import { z } from "zod";
 
