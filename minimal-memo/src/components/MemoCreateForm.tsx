@@ -25,7 +25,7 @@ export const MemoCreateForm = () => {
         body: JSON.stringify(data),
       });
       methods.reset();
-      mutate("/api/memos");
+      mutate(["/api/memos", "/api/tags"]);
     },
     (e) => console.error(e)
   );

@@ -3,7 +3,8 @@ import { Noto_Sans_JP, Inconsolata } from "next/font/google";
 import "./globals.css";
 import NextAuthProvider from "@/provider/NextAuthProvider";
 import { auth } from "@/common/auth";
-import AuthButton from "@/components/AuthButton";
+import { NavigationBar } from "@/components/NavigationBar";
+import { SideMenuBar } from "@/components/SideMenuBar";
 
 const inter = Inconsolata({ subsets: ["latin"] });
 
@@ -18,18 +19,11 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     <html lang="ja" data-theme="dracula">
       <NextAuthProvider session={session}>
         <body className={inter.className}>
-          <header>
-            <nav className="navbar bg-neutral">
-              <div className="navbar-start"></div>
-              <div className="navbar-center">
-                <h1 className="text-4xl">Minimal Memo</h1>
-              </div>
-              <div className="navbar-end">
-                <AuthButton />
-              </div>
-            </nav>
-          </header>
-          {children}
+          <NavigationBar />
+          <div className="flex">
+            <SideMenuBar />
+            {children}
+          </div>
         </body>
       </NextAuthProvider>
     </html>
