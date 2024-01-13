@@ -5,7 +5,7 @@ import { Prisma } from "@prisma/client";
 import { z } from "zod";
 
 /**
- * Tweet一覧取得
+ * Memo一覧取得
  */
 export const GET = auth(async (request) => {
   // データ取得
@@ -19,7 +19,7 @@ export const GET = auth(async (request) => {
 });
 
 /**
- * Tweet登録
+ * Memo登録
  */
 export const POST = auth(async (request) => {
   // セッションからユーザー情報を取得して設定
