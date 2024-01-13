@@ -1,8 +1,11 @@
-import { MemoOptionalDefaultsWithOptionalTagList } from "@/app/page";
 import { Tag as TagComponent } from "@/components/Tag";
+import { MemoOptionalDefaultsWithOptionalTagList } from "@/types/memo";
 import { TagType } from "@prisma/client";
 import { useFieldArray } from "react-hook-form";
 
+/**
+ * タグ入力
+ */
 export const TagsInput = () => {
   const {
     fields: tagList,
