@@ -4,11 +4,11 @@ import { GetMemosResponse } from "@/types/response";
 export const Memo = ({ memo }: { memo: GetMemosResponse }) => {
   return (
     <div className="card card-compact my-3 mx-6 p-3 bg-primary-content rounded-sm" key={`card-${memo.id}`}>
-      <div className="card-body">
+      <div className="card-body subpixel-antialiased">
         {/* 作成日 */}
         <span>{memo.createdAt.toString()}</span>
         {/* 内容 */}
-        <p>{memo.content}</p>
+        <pre className="m-0 p-0 bg-transparent">{memo.content}</pre>
         {/* タグ */}
         {memo.tagList.length > 0 && (
           <>
