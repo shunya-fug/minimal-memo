@@ -3,13 +3,13 @@
 import { fetcher } from "@/common/fetcher";
 import { Memo as MemoComponent } from "@/components/Memo";
 import { MemoCreateForm } from "@/components/MemoCreateForm";
-import { MemoWithTagList } from "@/types/memo";
+import { GetMemosResponse } from "@/types/response";
 import { ApiError } from "next/dist/server/api-utils";
 import { StatusCode } from "status-code-enum";
 import useSWR from "swr";
 
 export default function Home() {
-  const { data: memoList, isLoading, error } = useSWR<MemoWithTagList[], ApiError>("/api/memos", fetcher);
+  const { data: memoList, isLoading, error } = useSWR<GetMemosResponse[], ApiError>("/api/memos", fetcher);
 
   const Content = () => {
     // 読み込み中

@@ -1,7 +1,7 @@
 import { Tag } from "@/components/Tag";
-import { MemoWithTagList } from "@/types/memo";
+import { GetMemosResponse } from "@/types/response";
 
-export const Memo = ({ memo }: { memo: MemoWithTagList }) => {
+export const Memo = ({ memo }: { memo: GetMemosResponse }) => {
   return (
     <div className="card card-compact my-3 mx-6 p-3 bg-primary-content rounded-sm" key={`card-${memo.id}`}>
       <div className="card-body">
