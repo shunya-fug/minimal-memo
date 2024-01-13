@@ -1,6 +1,6 @@
-import { MemoCreateInputSchema } from "@/generated/zod/inputTypeSchemas";
 import { auth } from "@/common/auth";
-import { PrismaClient } from "@prisma/client";
+import { MemoCreateInputSchema } from "@/generated/zod/inputTypeSchemas";
+import { Prisma, PrismaClient } from "@prisma/client";
 import { z } from "zod";
 
 /**
@@ -32,12 +32,17 @@ export const POST = auth(async (request) => {
   // バリデーション
   const memoCreateInput: z.infer<typeof MemoCreateInputSchema> = {
     ...memoInput,
-    tagList: { create: tagListInput },
+    tagList: {
+      connectOrCreate: tagListInput.map((tag: Prisma.TagCreateWithoutMemoListInput) => ({
+        where: { sub_value: { sub: request.auth?.user?.id, value: tag.value } },
+        create: tag,
+      })),
+    },
   };
-  const memo = MemoCreateInputSchema.parse(memoCreateInput);
+  const memoValidated = MemoCreateInputSchema.parse(memoCreateInput);
 
   // 登録
   const prisma = new PrismaClient();
-  const memoCreated = await prisma.memo.create({ data: memo });
+  const memoCreated = await prisma.memo.create({ data: memoValidated });
   return Response.json(memoCreated);
 });
