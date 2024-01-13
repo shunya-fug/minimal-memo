@@ -36,13 +36,14 @@ model Tag {
   /// @zod.custom.omit([model])
   sub       String
   /// @zod.string.trim().min(1, { message: "タグ名を入力してください" }).max(30, { message: "30文字以内で入力してください" })
-  value     String   @unique
+  value     String
   type      TagType
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
   memoList Memo[]
 
+  @@unique([sub, value])
   @@map("tag")
 }
 
