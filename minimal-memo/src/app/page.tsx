@@ -3,12 +3,24 @@
 import { Memo as MemoComponent } from "@/components/Memo";
 import { MemoCreateForm } from "@/components/MemoCreateForm";
 import { MemoWithTagList } from "@/types/memo";
+import { ApiErrorResponse } from "@/types/response";
+import { ApiError } from "next/dist/server/api-utils";
 import useSWR from "swr";
+import { StatusCode } from "status-code-enum";
 
-const fetcher = (url: string) => fetch(url).then((res) => res.json());
+export const fetcher = async (url: string) => {
+  const response = await fetch(url);
+  const responseJson = await response.json();
+
+  if (!response.ok) {
+    throw new ApiError(response.status, (responseJson as ApiErrorResponse).message);
+  }
+
+  return responseJson;
+};
 
 export default function Home() {
-  const { data: memoList, isLoading, error } = useSWR<MemoWithTagList[]>("/api/memos", fetcher);
+  const { data: memoList, isLoading, error } = useSWR<MemoWithTagList[], ApiError>("/api/memos", fetcher);
 
   const Content = () => {
     // 読み込み中
@@ -19,11 +31,16 @@ export default function Home() {
         </div>
       );
     }
-    // データ読み込みエラー
+    // APIエラー
     if (error) {
+      // 認証エラーは無視
+      if (error.statusCode === StatusCode.ClientErrorUnauthorized) {
+        return;
+      }
+      // エラー表示
       return (
         <div className="text-center my-10">
-          <span className="text-error">Data fetch error.</span>
+          <span className="text-error">{error.message}</span>
         </div>
       );
     }
@@ -39,8 +56,7 @@ export default function Home() {
 
   return (
     <main className="container mx-auto">
-      <article className="prose">
-        <h1>Minimal Memo</h1>
+      <article className="prose mx-auto">
         <MemoCreateForm />
         <section>
           <Content />

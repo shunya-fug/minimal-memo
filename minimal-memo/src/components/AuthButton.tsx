@@ -6,10 +6,7 @@ export default function AuthButton() {
   const { data: session } = useSession();
 
   return (
-    <button
-      className="btn"
-      onClick={() => (session ? signOut() : signIn(undefined, { callbackUrl: "http://localhost:3000/login/complete" }))}
-    >
+    <button className="btn" onClick={() => (session ? signOut() : signIn("cognito"))}>
       {session ? "Sign out" : "Sign in"}
     </button>
   );
