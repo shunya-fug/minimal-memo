@@ -10,18 +10,20 @@ import { mutate } from "swr";
  * メモ作成フォーム
  */
 export const MemoCreateForm = () => {
-  const methods = useForm({ resolver: zodResolver(MemoOptionalDefaultsWithOptionalTagListSchema) });
+  const methods = useForm({
+    resolver: zodResolver(MemoOptionalDefaultsWithOptionalTagListSchema),
+    defaultValues: { content: "", tagList: [] },
+  });
 
   /**
    * メモ作成
    */
   const createMemo = methods.handleSubmit(
     async (data) => {
-      const res = await fetch("/api/memos", {
+      await fetch("/api/memos", {
         method: "POST",
         body: JSON.stringify(data),
       });
-      const memoCreated = await res.json();
       methods.reset();
       mutate("/api/memos");
     },
