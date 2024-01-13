@@ -1,23 +1,12 @@
 "use client";
 
+import { fetcher } from "@/common/fetcher";
 import { Memo as MemoComponent } from "@/components/Memo";
 import { MemoCreateForm } from "@/components/MemoCreateForm";
 import { MemoWithTagList } from "@/types/memo";
-import { ApiErrorResponse } from "@/types/response";
 import { ApiError } from "next/dist/server/api-utils";
-import useSWR from "swr";
 import { StatusCode } from "status-code-enum";
-
-export const fetcher = async (url: string) => {
-  const response = await fetch(url);
-  const responseJson = await response.json();
-
-  if (!response.ok) {
-    throw new ApiError(response.status, (responseJson as ApiErrorResponse).message);
-  }
-
-  return responseJson;
-};
+import useSWR from "swr";
 
 export default function Home() {
   const { data: memoList, isLoading, error } = useSWR<MemoWithTagList[], ApiError>("/api/memos", fetcher);
