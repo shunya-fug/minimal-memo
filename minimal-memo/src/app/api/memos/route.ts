@@ -1,6 +1,7 @@
 import { auth } from "@/common/auth";
+import { prisma } from "@/common/client";
 import { MemoCreateInputSchema } from "@/generated/zod/inputTypeSchemas";
-import { Prisma, PrismaClient } from "@prisma/client";
+import { Prisma } from "@prisma/client";
 import { z } from "zod";
 
 /**
@@ -8,7 +9,6 @@ import { z } from "zod";
  */
 export const GET = auth(async (request) => {
   // データ取得
-  const prisma = new PrismaClient();
   const memoList = await prisma.memo.findMany({
     // where 句に undefined を渡すと全件取得になるため念のため `|| ""` を付けておく
     where: { sub: request.auth?.user?.id || "" },
@@ -42,7 +42,6 @@ export const POST = auth(async (request) => {
   const memoValidated = MemoCreateInputSchema.parse(memoCreateInput);
 
   // 登録
-  const prisma = new PrismaClient();
   const memoCreated = await prisma.memo.create({ data: memoValidated });
   return Response.json(memoCreated);
 });
